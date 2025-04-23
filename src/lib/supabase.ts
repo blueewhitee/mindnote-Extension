@@ -39,6 +39,7 @@ export type Note = {
   title: string;
   content: string | null;
   summary: string | null;
+  metadata?: any; // Adding optional metadata field for concept map data
   is_archived: boolean;
   created_at: string | null;
   updated_at: string | null;

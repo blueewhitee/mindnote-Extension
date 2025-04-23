@@ -118,6 +118,9 @@ const NoteSaver: React.FC<NoteSaverProps> = ({ user, onLogout }) => {
       if (!session) {
         throw new Error('Authentication required');
       }
+
+      // Format content to include URL at the top followed by the summary
+      const formattedContent = `URL: ${currentUrl}\n\n${summary}`;
       
       // Create a new note in Supabase
       const { data, error } = await supabase
@@ -125,7 +128,7 @@ const NoteSaver: React.FC<NoteSaverProps> = ({ user, onLogout }) => {
         .insert({
           user_id: user.uid,
           title: pageTitle,
-          content: currentUrl, // Storing URL as content
+          content: formattedContent, // URL at top followed by summary
           summary: summary,
           is_archived: false
         })
