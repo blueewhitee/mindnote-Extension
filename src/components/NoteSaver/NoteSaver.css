@@ -8,7 +8,7 @@
 
 /* Dark theme */
 .note-saver.dark {
-  background-color: #1e1e2e;
+  background-color: #000000;
   color: #e2e8f0;
 }
 
@@ -81,8 +81,8 @@
 }
 
 .dark .generate-summary-prompt {
-  background-color: #2d3748;
-  border: 1px dashed #4a5568;
+  background-color: #121212;
+  border: 1px dashed #333333;
 }
 
 .generate-summary-prompt p {
@@ -252,9 +252,9 @@ textarea {
 }
 
 .dark textarea {
-  background-color: #0f172a;
+  background-color: #000000;
   color: #e2e8f0;
-  border: 1px solid #2d3748;
+  border: 1px solid #333333;
 }
 
 .save-btn {
