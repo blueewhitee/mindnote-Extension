@@ -15,7 +15,21 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
   useEffect(() => {
     console.log("Supabase client initialized:", !!supabase);
     console.log("Auth methods available:", !!supabase?.auth);
-  }, []);
+    
+    // Check if we have an active session on component mount
+    const checkExistingSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (data?.session && data.session.user) {
+        console.log("Found existing session:", data.session.user.email);
+        onLogin({ 
+          email: data.session.user.email || '', 
+          uid: data.session.user.id 
+        });
+      }
+    };
+    
+    checkExistingSession();
+  }, [onLogin]);
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,61 +83,147 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
     setError('');
     
     try {
+      // Get the extension's redirect URL
+      const redirectURL = chrome.identity.getRedirectURL();
+      console.log("Extension redirect URL:", redirectURL);
+      
       // Use Supabase OAuth for Google sign in
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: chrome.identity ? undefined : window.location.origin
+          redirectTo: redirectURL,
+          // Don't add scopes here - they're configured in Supabase
         }
       });
       
       if (error) throw error;
       
-      // If browser.identity is available (extension environment), we handle the flow differently
-      if (chrome.identity) {
-        chrome.identity.launchWebAuthFlow({
-          url: data.url as string,
-          interactive: true
-        }, async (redirectUrl) => {
-          if (chrome.runtime.lastError) {
-            setError('Google login failed: ' + chrome.runtime.lastError.message);
-            setIsLoading(false);
-            return;
-          }
-          
-          // Parse the token from redirectUrl and authenticate with Supabase
-          const hashParams = new URLSearchParams(new URL(redirectUrl).hash.substring(1));
-          const accessToken = hashParams.get('access_token');
-          
-          if (accessToken) {
-            const { data, error } = await supabase.auth.getUser(accessToken);
-            if (error) {
-              setError(error.message);
-              setIsLoading(false);
-              return;
-            }
-            
-            if (data.user) {
-              await browser.storage.local.set({ 
-                user: { email: data.user.email, uid: data.user.id }
-              });
-              
-              onLogin({ email: data.user.email || '', uid: data.user.id });
-            }
-          } else {
-            setError('Authentication failed');
-          }
-          setIsLoading(false);
-        });
-      }
-      // For development in browser environment
-      else if (data.url) {
-        window.location.href = data.url;
+      if (!data.url) {
+        throw new Error("No OAuth URL returned from Supabase");
       }
       
+      console.log("OAuth URL generated:", data.url);
+      
+      // For browser extension environment, use chrome.identity.launchWebAuthFlow
+      chrome.identity.launchWebAuthFlow({
+        url: data.url,
+        interactive: true
+      }, async (redirectUrl) => {
+        console.log("Auth flow completed, redirect URL:", redirectUrl ? "URL received" : "No URL");
+        
+        if (chrome.runtime.lastError) {
+          console.error("Chrome identity error:", chrome.runtime.lastError);
+          setError('Google login failed: ' + chrome.runtime.lastError.message);
+          setIsLoading(false);
+          return;
+        }
+        
+        if (!redirectUrl) {
+          setError('Authentication failed - no redirect URL returned');
+          setIsLoading(false);
+          return;
+        }
+        
+        try {
+          // Log the full redirect URL for debugging
+          console.log("Full redirect URL:", redirectUrl);
+          
+          // Parse the URL to extract the auth info
+          const url = new URL(redirectUrl);
+          
+          // Look for code in the query parameters
+          let code = url.searchParams.get('code');
+          
+          // If not found in query params, check the hash fragment
+          if (!code && url.hash) {
+            const hashParams = new URLSearchParams(url.hash.substring(1));
+            code = hashParams.get('code');
+            
+            // If still not found, look for access_token in hash (implicit flow)
+            if (!code) {
+              const accessToken = hashParams.get('access_token');
+              if (accessToken) {
+                console.log("Found access_token in hash, using token directly");
+                
+                // Get user info using the token
+                const { data, error } = await supabase.auth.getUser(accessToken);
+                
+                if (error) {
+                  throw error;
+                }
+                
+                if (data.user) {
+                  // Store session in browser storage
+                  const session = {
+                    access_token: accessToken,
+                    user: data.user
+                  };
+                  
+                  await browser.storage.local.set({
+                    session,
+                    user: { 
+                      email: data.user.email, 
+                      uid: data.user.id
+                    }
+                  });
+                  
+                  showToast("Success", "You have successfully signed in with Google.");
+                  onLogin({ 
+                    email: data.user.email || '', 
+                    uid: data.user.id 
+                  });
+                  setIsLoading(false);
+                  return;
+                }
+              }
+            }
+          }
+          
+          // If we found a code, exchange it for a session
+          if (code) {
+            console.log("Authentication code received, exchanging for session...");
+            
+            // Exchange the code for a session
+            const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+            
+            if (error) {
+              console.error("Session exchange error:", error);
+              throw error;
+            }
+            
+            if (!data.session) {
+              throw new Error("No session returned from code exchange");
+            }
+            
+            console.log("Successfully authenticated with Google");
+            
+            // Store the session data
+            await browser.storage.local.set({
+              session: data.session,
+              user: { 
+                email: data.session.user.email, 
+                uid: data.session.user.id
+              }
+            });
+            
+            showToast("Success", "You have successfully signed in with Google.");
+            onLogin({ 
+              email: data.session.user.email || '', 
+              uid: data.session.user.id 
+            });
+          } else {
+            throw new Error("No authentication code or token found in redirect URL");
+          }
+        } catch (err: any) {
+          console.error("Error processing auth redirect:", err);
+          setError(err.message || 'Failed to process authentication');
+        } finally {
+          setIsLoading(false);
+        }
+      });
     } catch (err: any) {
+      console.error("Google sign in error:", err);
       setError(err.message || 'Google login failed');
-      console.error(err);
       setIsLoading(false);
     }
   };

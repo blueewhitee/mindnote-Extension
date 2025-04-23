@@ -9,7 +9,20 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Missing Supabase environment variables. Check your .env file.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Create Supabase client with browser extension-friendly options
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: false, // Don't use localStorage in extensions
+    detectSessionInUrl: false, // Don't auto-detect URL fragments in extensions
+    flowType: 'pkce' // Use PKCE flow for added security
+  },
+  global: {
+    headers: {
+      'X-Client-Info': 'mindnotes-extension'
+    }
+  }
+});
 
 export type Profile = {
   id: string;
