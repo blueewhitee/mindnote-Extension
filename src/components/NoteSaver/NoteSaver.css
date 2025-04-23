@@ -1,0 +1,336 @@
+.note-saver {
+  width: 350px;
+  padding: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  color: #333;
+  background-color: #ffffff;
+}
+
+/* Dark theme */
+.note-saver.dark {
+  background-color: #1e1e2e;
+  color: #e2e8f0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.dark .header {
+  border-bottom: 1px solid #2d3748;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.dark .header h2 {
+  color: #e2e8f0;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.user-info span {
+  margin-right: 10px;
+  color: #666;
+}
+
+.dark .user-info span {
+  color: #a0aec0;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: #4285f4;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0;
+}
+
+.dark .logout-btn {
+  color: #60a5fa;
+}
+
+.logout-btn:hover {
+  text-decoration: underline;
+}
+
+.generate-summary-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 30px 0;
+  padding: 20px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.dark .generate-summary-prompt {
+  background-color: #2d3748;
+  border: 1px dashed #4a5568;
+}
+
+.generate-summary-prompt p {
+  margin-bottom: 15px;
+  color: #555;
+  font-size: 14px;
+}
+
+.dark .generate-summary-prompt p {
+  color: #cbd5e0;
+}
+
+.summary-method {
+  margin-bottom: 15px;
+}
+
+.ai-toggle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ai-toggle input {
+  margin-right: 8px;
+}
+
+.toggle-label {
+  font-size: 14px;
+  color: #555;
+}
+
+.dark .toggle-label {
+  color: #a0aec0;
+}
+
+.generate-summary-btn {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dark .generate-summary-btn {
+  background-color: #60a5fa;
+}
+
+.generate-summary-btn:hover {
+  background-color: #3367d6;
+}
+
+.dark .generate-summary-btn:hover {
+  background-color: #3b82f6;
+}
+
+.generate-summary-btn:disabled {
+  background-color: #a9a9a9;
+  cursor: not-allowed;
+}
+
+.dark .generate-summary-btn:disabled {
+  background-color: #60a5fa;
+  opacity: 0.6;
+}
+
+.page-info {
+  margin-bottom: 15px;
+}
+
+.page-info h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.dark .page-info h3 {
+  color: #e2e8f0;
+}
+
+.page-info a {
+  color: #4285f4;
+  font-size: 0.9rem;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+}
+
+.dark .page-info a {
+  color: #60a5fa;
+}
+
+.page-info a:hover {
+  text-decoration: underline;
+}
+
+.summary-section {
+  margin-bottom: 15px;
+}
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.summary-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.dark .summary-header h4 {
+  color: #cbd5e0;
+}
+
+.summary-controls {
+  display: flex;
+  align-items: center;
+}
+
+.summary-controls .ai-toggle {
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
+.generate-btn {
+  background-color: #f1f3f4;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.dark .generate-btn {
+  background-color: #2d3748;
+  color: #cbd5e0;
+}
+
+.generate-btn:hover {
+  background-color: #e8eaed;
+}
+
+.dark .generate-btn:hover {
+  background-color: #4a5568;
+}
+
+textarea {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  font-family: inherit;
+  resize: vertical;
+  font-size: 14px;
+  background-color: #fff;
+  color: #333;
+}
+
+.dark textarea {
+  background-color: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid #2d3748;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.dark .save-btn {
+  background-color: #60a5fa;
+}
+
+.save-btn:hover {
+  background-color: #3367d6;
+}
+
+.dark .save-btn:hover {
+  background-color: #3b82f6;
+}
+
+.save-btn:disabled {
+  background-color: #a9a9a9;
+  cursor: not-allowed;
+}
+
+.dark .save-btn:disabled {
+  background-color: #60a5fa;
+  opacity: 0.6;
+}
+
+.save-btn.success {
+  background-color: #0f9d58;
+}
+
+.dark .save-btn.success {
+  background-color: #10b981;
+}
+
+.save-btn.error {
+  background-color: #d32f2f;
+}
+
+.dark .save-btn.error {
+  background-color: #ef4444;
+}
+
+.status-message {
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.status-message.success {
+  background-color: rgba(15, 157, 88, 0.1);
+  color: #0f9d58;
+}
+
+.dark .status-message.success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.status-message.error {
+  background-color: rgba(211, 47, 47, 0.1);
+  color: #d32f2f;
+}
+
+.dark .status-message.error {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+}

@@ -1,0 +1,32 @@
+import { createClient } from '@supabase/supabase-js';
+
+// Get Supabase credentials from environment variables
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// Validate that required environment variables are set
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('Missing Supabase environment variables. Check your .env file.');
+}
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+export type Profile = {
+  id: string;
+  email: string;
+  full_name: string | null;
+  avatar_url: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+};
+
+export type Note = {
+  id: string;
+  user_id: string;
+  title: string;
+  content: string | null;
+  summary: string | null;
+  is_archived: boolean;
+  created_at: string | null;
+  updated_at: string | null;
+};
