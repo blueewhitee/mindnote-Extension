@@ -14,7 +14,7 @@ MindNotes is a powerful browser extension that helps you save web page links and
 ## Load the extension in Chrome:
    - Open Chrome and navigate to `chrome://extensions/`
    - Enable "Developer mode" using the toggle in the top-right corner
-   - Click "Load unpacked" and select the `dist/` folder created by the build process
+   - Click "Load unpacked" and select the `output/` folder created by the build process
    - The MindNotes extension should now appear in your extensions list and be available in the toolbar
 
 ## How to Use
