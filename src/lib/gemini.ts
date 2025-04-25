@@ -27,7 +27,7 @@ if (GEMINI_API_KEY && GEMINI_API_KEY !== 'your_gemini_api_key_here') {
   console.warn('Gemini API key not configured or invalid. Summary generation will be disabled.');
 }
 
-export const generateSummaryWithGemini = async (text: string): Promise<string> => {
+export const generateSummaryWithGemini = async (text: string, url?: string): Promise<string> => {
   // Check if the client and model were initialized successfully
   if (!geminiModel) {
     console.error('Gemini client not initialized. Cannot generate summary.');
@@ -37,6 +37,15 @@ export const generateSummaryWithGemini = async (text: string): Promise<string> =
 
   try {
     console.log('Making Gemini API request via SDK...');
+    
+    // Special handling for YouTube URLs
+    const isYouTube = url && (url.includes('youtube.com') || url.includes('youtu.be'));
+    
+    if (isYouTube) {
+      console.log('YouTube URL detected, using specialized YouTube summary approach');
+      return await generateYouTubeSummaryWithGemini(url);
+    }
+    
     console.log('Text length for summarization:', text.length);
 
     if (!text || text.trim().length === 0) {
@@ -93,6 +102,46 @@ export const generateSummaryWithGemini = async (text: string): Promise<string> =
     return `Error generating summary: ${error.message || 'Unknown error'}`;
   }
 };
+
+// New function for YouTube-specific summaries
+async function generateYouTubeSummaryWithGemini(youtubeUrl: string): Promise<string> {
+  try {
+    console.log('Generating YouTube-specific summary for:', youtubeUrl);
+    
+    // Create a specialized prompt for YouTube videos
+    const prompt = `
+    You are a helpful assistant that summarizes YouTube videos.
+    
+    Please analyze the YouTube video at this URL: ${youtubeUrl}
+    
+    Generate a summary that includes:
+    1. The likely main topic of the video
+    2. What viewers might learn or experience from watching it
+    3. Any notable context based on the channel or video type
+    
+    Provide the summary in 3-4 clear, concise sentences.
+    `;
+    
+    console.log('YouTube summary prompt created');
+    
+    // Use the generateContent method from the SDK
+    const result = await geminiModel.generateContent(prompt);
+    const response = await result.response;
+    const summaryText = response.text();
+    
+    console.log('YouTube summary generated, length:', summaryText?.length || 0);
+    
+    if (summaryText) {
+      return summaryText.trim();
+    } else {
+      console.error('Empty response from Gemini API for YouTube summary');
+      return "Unable to generate summary for this YouTube video.";
+    }
+  } catch (error: any) {
+    console.error('Error generating YouTube summary with Gemini:', error);
+    return `Error generating YouTube video summary: ${error.message || 'Unknown error'}`;
+  }
+}
 
 export const generateConceptMapWithGemini = async (text: string, url: string, summary: string): Promise<any> => {
   // Check if the client and model were initialized successfully

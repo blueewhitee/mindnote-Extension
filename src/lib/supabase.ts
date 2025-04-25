@@ -44,3 +44,26 @@ export type Note = {
   created_at: string | null;
   updated_at: string | null;
 };
+
+export type Bookmark = {
+  id: string;
+  user_id: string;
+  title: string;
+  url: string;
+  description: string | null;
+  tags: string[] | null;
+  favicon_url: string | null;
+  is_favorite: boolean;
+  created_at: string | null;
+  updated_at: string | null;
+  folder_id: string | null;
+};
+
+export type BookmarkFolder = {
+  id: string;
+  user_id: string;
+  name: string;
+  parent_folder_id: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+};
