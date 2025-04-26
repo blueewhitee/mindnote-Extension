@@ -67,6 +67,54 @@
   text-decoration: underline;
 }
 
+/* Tab Navigation */
+.tab-navigation {
+  display: flex;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.dark .tab-navigation {
+  border-bottom: 1px solid #2d3748;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.dark .tab-btn {
+  color: #a0aec0;
+}
+
+.tab-btn.active {
+  color: #4285f4;
+  border-bottom: 2px solid #4285f4;
+}
+
+.dark .tab-btn.active {
+  color: #60a5fa;
+  border-bottom: 2px solid #60a5fa;
+}
+
+.tab-btn:hover:not(.active) {
+  color: #333;
+  background-color: #f5f5f5;
+}
+
+.dark .tab-btn:hover:not(.active) {
+  color: #e2e8f0;
+  background-color: #1a1a1a;
+}
+
 .generate-summary-prompt {
   display: flex;
   flex-direction: column;
@@ -155,11 +203,18 @@
 
 .page-info {
   margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.dark .page-info {
+  border-bottom: 1px solid #2d3748;
 }
 
 .page-info h3 {
-  margin: 0 0 5px 0;
-  font-size: 1.1rem;
+  margin: 0 0 5px;
+  font-size: 16px;
+  font-weight: 500;
   color: #333;
 }
 
@@ -169,12 +224,12 @@
 
 .page-info a {
   color: #4285f4;
-  font-size: 0.9rem;
+  font-size: 12px;
+  text-decoration: none;
   display: block;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-decoration: none;
+  white-space: nowrap;
 }
 
 .dark .page-info a {
@@ -198,12 +253,12 @@
 
 .summary-header h4 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 14px;
   color: #555;
 }
 
 .dark .summary-header h4 {
-  color: #cbd5e0;
+  color: #a0aec0;
 }
 
 .summary-controls {
@@ -217,60 +272,70 @@
 }
 
 .generate-btn {
-  background-color: #f1f3f4;
-  border: none;
+  background-color: transparent;
+  border: 1px solid #4285f4;
+  color: #4285f4;
   border-radius: 4px;
-  padding: 5px 10px;
-  font-size: 0.85rem;
+  padding: 4px 8px;
+  font-size: 12px;
+  margin-left: 10px;
   cursor: pointer;
-  color: #333;
 }
 
 .dark .generate-btn {
-  background-color: #2d3748;
-  color: #cbd5e0;
+  border: 1px solid #60a5fa;
+  color: #60a5fa;
 }
 
 .generate-btn:hover {
-  background-color: #e8eaed;
+  background-color: rgba(66, 133, 244, 0.1);
 }
 
 .dark .generate-btn:hover {
-  background-color: #4a5568;
+  background-color: rgba(96, 165, 250, 0.1);
 }
 
 textarea {
   width: 100%;
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 8px;
   font-family: inherit;
-  resize: vertical;
   font-size: 14px;
-  background-color: #fff;
+  resize: vertical;
+  background-color: white;
   color: #333;
 }
 
 .dark textarea {
-  background-color: #000000;
+  background-color: #2d3748;
+  border: 1px solid #4a5568;
   color: #e2e8f0;
-  border: 1px solid #333333;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #4285f4;
+}
+
+.dark textarea:focus {
+  border-color: #3b82f6;
 }
 
 .save-btn {
   width: 100%;
-  padding: 10px;
   background-color: #4285f4;
   color: white;
   border: none;
   border-radius: 4px;
+  padding: 10px;
+  font-size: 15px;
   cursor: pointer;
-  font-weight: 500;
-  margin-top: 10px;
+  transition: background-color 0.2s;
 }
 
 .dark .save-btn {
-  background-color: #60a5fa;
+  background-color: #3b82f6;
 }
 
 .save-btn:hover {
@@ -278,21 +343,20 @@ textarea {
 }
 
 .dark .save-btn:hover {
-  background-color: #3b82f6;
+  background-color: #2563eb;
 }
 
 .save-btn:disabled {
-  background-color: #a9a9a9;
+  background-color: #cccccc;
   cursor: not-allowed;
 }
 
 .dark .save-btn:disabled {
-  background-color: #60a5fa;
-  opacity: 0.6;
+  background-color: #4b5563;
 }
 
 .save-btn.success {
-  background-color: #0f9d58;
+  background-color: #34a853;
 }
 
 .dark .save-btn.success {
@@ -300,7 +364,7 @@ textarea {
 }
 
 .save-btn.error {
-  background-color: #d32f2f;
+  background-color: #ea4335;
 }
 
 .dark .save-btn.error {
@@ -313,30 +377,33 @@ textarea {
   border-radius: 4px;
   font-size: 14px;
   text-align: center;
+  background-color: #f0f0f0;
+  color: #555;
+}
+
+.dark .status-message {
+  background-color: #1a202c;
+  color: #a0aec0;
 }
 
 .status-message.success {
   background-color: #d4edda;
   color: #155724;
-  border: 1px solid #c3e6cb;
 }
 
 .dark .status-message.success {
-  background-color: #064e3b;
-  color: #d1fae5;
-  border: 1px solid #065f46;
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #10b981;
 }
 
 .status-message.error {
   background-color: #f8d7da;
   color: #721c24;
-  border: 1px solid #f5c6cb;
 }
 
 .dark .status-message.error {
-  background-color: #7f1d1d;
-  color: #fecaca;
-  border: 1px solid #991b1b;
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
 }
 
 /* Concept map status styling */
@@ -376,4 +443,454 @@ textarea {
 .status-icon {
   margin-right: 8px;
   font-weight: bold;
+}
+
+/* Bookmark styling */
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.bookmark-btn, 
+.quick-bookmark-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #34A853;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  flex: 1;
+  transition: background-color 0.2s;
+}
+
+.dark .bookmark-btn,
+.dark .quick-bookmark-btn {
+  background-color: #10b981;
+}
+
+.bookmark-btn:hover,
+.quick-bookmark-btn:hover {
+  background-color: #2E9549;
+}
+
+.dark .bookmark-btn:hover,
+.dark .quick-bookmark-btn:hover {
+  background-color: #059669;
+}
+
+.bookmark-btn:disabled,
+.quick-bookmark-btn:disabled {
+  background-color: #a9a9a9;
+  cursor: not-allowed;
+}
+
+.dark .bookmark-btn:disabled,
+.dark .quick-bookmark-btn:disabled {
+  background-color: #10b981;
+  opacity: 0.6;
+}
+
+.bookmark-icon {
+  margin-right: 8px;
+  fill: currentColor;
+}
+
+.quick-bookmark-btn {
+  background-color: #DB4437;
+}
+
+.dark .quick-bookmark-btn {
+  background-color: #f43f5e;
+}
+
+.quick-bookmark-btn:hover {
+  background-color: #C53929;
+}
+
+.dark .quick-bookmark-btn:hover {
+  background-color: #e11d48;
+}
+
+.quick-bookmark-btn.standalone {
+  margin: 10px 0;
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 15px;
+}
+
+.bookmark-form {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.dark .bookmark-form {
+  background-color: #1a1a1a;
+}
+
+.bookmark-form .form-group {
+  margin-bottom: 12px;
+}
+
+.bookmark-form label {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.dark .bookmark-form label {
+  color: #a0aec0;
+}
+
+.bookmark-form input, 
+.bookmark-form textarea,
+.bookmark-form select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #333;
+}
+
+.dark .bookmark-form input,
+.dark .bookmark-form textarea,
+.dark .bookmark-form select {
+  background-color: #000000;
+  color: #e2e8f0;
+  border: 1px solid #333333;
+}
+
+.save-bookmark-btn {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  background-color: #34A853;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.dark .save-bookmark-btn {
+  background-color: #10b981;
+}
+
+.save-bookmark-btn:hover {
+  background-color: #2E9549;
+}
+
+.dark .save-bookmark-btn:hover {
+  background-color: #059669;
+}
+
+.save-bookmark-btn:disabled {
+  background-color: #a9a9a9;
+  cursor: not-allowed;
+}
+
+.dark .save-bookmark-btn:disabled {
+  background-color: #10b981;
+  opacity: 0.6;
+}
+
+.save-bookmark-btn.success {
+  background-color: #0f9d58;
+}
+
+.dark .save-bookmark-btn.success {
+  background-color: #10b981;
+}
+
+.save-bookmark-btn.error {
+  background-color: #d32f2f;
+}
+
+.dark .save-bookmark-btn.error {
+  background-color: #ef4444;
+}
+
+.divider {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  text-align: center;
+  color: #888;
+}
+
+.dark .divider {
+  color: #666;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #ddd;
+}
+
+.dark .divider::before,
+.dark .divider::after {
+  border-color: #444;
+}
+
+.divider span {
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.dark .divider span {
+  color: #94a3b8;
+}
+
+/* Bookmarks Tab Styling */
+.bookmarks-manager {
+  display: flex;
+  flex-direction: column;
+  /* Let the content determine the height, remove fixed/flex height */
+  overflow: hidden; /* Keep inner content scrollable */
+  margin-top: 10px;
+}
+
+/* Style for the separator */
+.section-separator {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 10px 0; /* Add some vertical spacing */
+}
+
+.dark .section-separator {
+  border-top: 1px solid #2d3748;
+}
+
+/* Ensure BookmarkFolderManager and BookmarkList take appropriate space */
+.bookmark-folder-manager { 
+  /* Allow it to shrink if needed, but don't grow excessively */
+  flex-shrink: 0; 
+  margin-bottom: 5px; /* Optional space before separator */
+}
+
+.bookmark-list {
+  /* Allow the list to grow and fill remaining space */
+  flex: 1;
+  min-height: 0; /* Important for flex item scrolling */
+  /* Styles moved from BookmarkList.css might be needed here if they were panel-specific */
+}
+
+/* Folder dropdown styling */
+.folder-selection {
+  margin-bottom: 12px;
+}
+
+.folder-selection select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-size: 14px;
+}
+
+.folder-selection select option {
+  padding: 8px 4px;
+}
+
+.folder-selection select option.folder-option {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.folder-selection select option.depth-0 {
+  font-weight: bold;
+}
+
+.folder-selection select option.depth-1 {
+  padding-left: 12px;
+}
+
+.folder-selection select option.depth-2 {
+  padding-left: 24px;
+}
+
+.folder-selection select option.depth-3 {
+  padding-left: 36px;
+}
+
+.folder-selection select option.depth-4 {
+  padding-left: 48px;
+}
+
+.folder-selection label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+/* Folder path display */
+.folder-path {
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+
+/* Add a small info icon */
+.folder-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.folder-info-icon {
+  color: #888;
+  font-size: 14px;
+  cursor: help;
+}
+
+/* Quick save folder selector styling */
+.quick-save-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.quick-save-container.centered {
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.folder-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.dark .folder-toggle-btn {
+  background-color: #2d3748;
+  color: #e2e8f0;
+  border: 1px solid #4a5568;
+}
+
+.folder-toggle-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.dark .folder-toggle-btn:hover {
+  background-color: #4a5568;
+}
+
+.quick-folder-selector {
+  margin: 10px 0 15px;
+  padding: 12px;
+  background-color: #f5f5f5;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+
+.dark .quick-folder-selector {
+  background-color: #1a202c;
+  border: 1px solid #2d3748;
+}
+
+.quick-folder-selector label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.dark .quick-folder-selector label {
+  color: #a0aec0;
+}
+
+.quick-folder-selector select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  color: #333;
+  font-size: 14px;
+}
+
+.dark .quick-folder-selector select {
+  background-color: #2d3748;
+  border: 1px solid #4a5568;
+  color: #e2e8f0;
+}
+
+.quick-folder-selector select option {
+  padding: 5px;
+}
+
+.dark .quick-folder-selector select option {
+  background-color: #2d3748;
+  color: #e2e8f0;
+}
+
+.quick-save-section {
+  margin: 15px 0;
+  width: 100%;
+}
+
+/* Style for indented folder options in dropdown */
+option.folder-option {
+  padding: 5px 8px;
+}
+
+option.folder-option.depth-0 {
+  font-weight: 500;
+}
+
+option.folder-option.depth-1 {
+  padding-left: 20px;
+}
+
+option.folder-option.depth-2 {
+  padding-left: 40px;
+}
+
+option.folder-option.depth-3 {
+  padding-left: 60px;
+}
+
+.centered {
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.folder-option {
+  white-space: nowrap;
+  font-family: monospace;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
