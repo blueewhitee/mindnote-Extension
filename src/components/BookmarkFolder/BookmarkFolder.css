@@ -1,0 +1,285 @@
+/* BookmarkFolder.css */
+.bookmark-folder-manager {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 8px;
+  color: #e1e1e1;
+  background-color: #27292d;
+  border-radius: 6px;
+}
+
+.folder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #3a3a3a;
+  margin-bottom: 12px;
+}
+
+.folder-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.new-folder-btn {
+  display: flex;
+  align-items: center;
+  background-color: #4a4f57;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.new-folder-btn:hover {
+  background-color: #5d6471;
+}
+
+.new-folder-icon {
+  font-size: 14px;
+  margin-right: 4px;
+}
+
+.folder-tree-container {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.all-bookmarks-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #3a3a3a;
+}
+
+.all-bookmarks-item:hover {
+  background-color: #323438;
+}
+
+.folder-icon {
+  margin-right: 8px;
+}
+
+.folder-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.folder-name.selected {
+  font-weight: 600;
+  color: #61dafb;
+}
+
+.folder-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.folder-item {
+  margin: 4px 0;
+}
+
+.folder-row {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.folder-row:hover {
+  background-color: #323438;
+}
+
+.folder-item.selected > .folder-row {
+  background-color: #374151;
+}
+
+.folder-expand-icon {
+  width: 16px;
+  text-align: center;
+  cursor: pointer;
+  margin-right: 2px;
+}
+
+.expand-icon {
+  font-size: 10px;
+  color: #9ca3af;
+}
+
+.folder-actions {
+  display: flex;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.folder-row:hover .folder-actions {
+  opacity: 1;
+}
+
+.folder-action-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  padding: 2px;
+  margin-left: 2px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.folder-action-btn:hover {
+  background-color: #4b5563;
+}
+
+.nested-list {
+  padding-left: 20px;
+}
+
+/* Loading and Error States */
+.loading-folders,
+.folder-error,
+.no-folders {
+  padding: 12px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.folder-error {
+  color: #ef4444;
+}
+
+/* Modal Styles */
+.folder-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.folder-modal {
+  background-color: #1f2024;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.folder-modal h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #e1e1e1;
+}
+
+.folder-form {
+  width: 100%;
+}
+
+.folder-form .form-group {
+  margin-bottom: 16px;
+}
+
+.folder-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #d1d5db;
+}
+
+.folder-form input,
+.folder-form select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #2c2d31;
+  color: #e1e1e1;
+  border: 1px solid #4b5563;
+  border-radius: 4px;
+}
+
+.folder-form input:focus,
+.folder-form select:focus {
+  outline: none;
+  border-color: #61dafb;
+}
+
+.folder-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.folder-modal-actions button {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+}
+
+.cancel-btn {
+  background-color: #4b5563;
+  color: #e1e1e1;
+}
+
+.cancel-btn:hover {
+  background-color: #6b7280;
+}
+
+.create-btn,
+.save-btn {
+  background-color: #2563eb;
+  color: white;
+}
+
+.create-btn:hover,
+.save-btn:hover {
+  background-color: #3b82f6;
+}
+
+.delete-btn {
+  background-color: #dc2626;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #ef4444;
+}
+
+.delete-warning {
+  color: #f59e0b;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.folder-error {
+  padding: 8px;
+  margin-bottom: 16px;
+  background-color: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid #ef4444;
+  color: #ef4444;
+  border-radius: 2px;
+}
